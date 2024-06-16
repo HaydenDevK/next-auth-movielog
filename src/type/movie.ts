@@ -20,3 +20,11 @@ export type TMovie = {
   title: string;
   watched: boolean;
 };
+
+export type TThemeType = {
+  themeType: "now_playing" | "popular" | "top_rated" | "upcoming";
+  title: string;
+  subTitle: string;
+};
+
+export type TThemeKey = "nowPlaying" | "popular" | "topRated" | "upcoming";

@@ -1,13 +1,8 @@
 import HomeBanner from "@/components/HomeBanner";
 import HomeHeader from "@/components/HomeHeader";
 import TmdbMovieList from "@/components/TmdbMovieList";
-
-export const getMovies = async (type: string, page = 1) =>
-  await (
-    await fetch(
-      `${process.env.NEXT_PUBLIC_LOCAL_HOST_URL}/api/tmdb-movies?type=${type}&page=${page}`
-    )
-  ).json();
+import { LIST_THEME } from "@/libs/constant";
+import { fetchMovies } from "@/libs/fetch";
 
 export default async function HomePage() {
   const [
@@ -16,35 +11,21 @@ export default async function HomePage() {
     { results: topRated },
     { results: upcoming },
   ] = await Promise.all([
-    getMovies("now_playing"),
-    getMovies("popular"),
-    getMovies("top_rated"),
-    getMovies("upcoming"),
+    fetchMovies(LIST_THEME.nowPlaying.themeType),
+    fetchMovies(LIST_THEME.popular.themeType),
+    fetchMovies(LIST_THEME.topRated.themeType),
+    fetchMovies(LIST_THEME.upcoming.themeType),
   ]);
   return (
     <main>
       <HomeHeader />
       <HomeBanner />
-      <TmdbMovieList
-        movieList={nowPlaying}
-        title="NOW PLAYING"
-        subTitle="현재 극장에서 상영 중인 작품들이에요 🍿"
-      />
-      <TmdbMovieList
-        movieList={popular}
-        title="POPULAR"
-        subTitle="지금 인기있는 작품들이에요 🔥"
-      />
-      <TmdbMovieList
-        movieList={topRated}
-        title="TOP RATED"
-        subTitle="평가가 높은 작품들이에요 🌟"
-      />
-      <TmdbMovieList
-        movieList={upcoming}
-        title="UPCOMING"
-        subTitle="개봉 예정 작품들이에요 𝌗"
-      />
+      <section className="flex flex-col gap-1 bg-white">
+        <TmdbMovieList movieList={nowPlaying} themeKey="nowPlaying" isHome />
+        <TmdbMovieList movieList={popular} themeKey="popular" isHome />
+        <TmdbMovieList movieList={topRated} themeKey="topRated" isHome />
+        <TmdbMovieList movieList={upcoming} themeKey="upcoming" isHome />
+      </section>
     </main>
   );
 }

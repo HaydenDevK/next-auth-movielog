@@ -3,11 +3,12 @@ import { thumbnail01 } from "../../public/assets/assets";
 import { star } from "../../public/assets/assets";
 import { TTmdbMovie } from "@/type/movie";
 import { FaHeartCirclePlus } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function MovieCard(props: TTmdbMovie) {
-  const { title, poster_path, vote_average, release_date } = props;
+  const { id, title, poster_path, vote_average, release_date } = props;
   return (
-    <div>
+    <Link className="w-[240px] flex-shrink-0" href={`/${id}`}>
       <img
         src={
           `https://image.tmdb.org/t/p/w500/${poster_path}` || thumbnail01.src
@@ -39,6 +40,6 @@ export default function MovieCard(props: TTmdbMovie) {
           <FaHeartCirclePlus className="text-[28px] text-white hover:animate-ping" />
         </button>
       </div>
-    </div>
+    </Link>
   );
 }

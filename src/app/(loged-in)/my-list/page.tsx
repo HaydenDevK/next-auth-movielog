@@ -2,7 +2,7 @@ import AddMovieForm from "@/components/AddMovieForm";
 import MovieList from "@/components/MovieList";
 import Title from "@/components/Title";
 
-export default function MovieListPage() {
+export default function MyListPage() {
   return (
     <main className="w-full py-10 px-6">
       <Title

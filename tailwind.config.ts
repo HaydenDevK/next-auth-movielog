@@ -24,6 +24,9 @@ const config: Config = {
       animation: {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
+      gridTemplateColumns: {
+        "auto-fill": "repeat(auto-fill, 240px)",
+      },
     },
   },
   plugins: [],
