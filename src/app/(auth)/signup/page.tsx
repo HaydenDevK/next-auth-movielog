@@ -4,13 +4,14 @@ import TermLabel from "@/components/TermLabel";
 import Title from "@/components/Title";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <main className="w-full py-10 px-6">
-      <Title h1Text="Login" />
+      <Title h1Text="Sign Up" />
       <form action="">
         <fieldset className="flex flex-col gap-4 mb-4">
-          <Input type="text" required placeholder={"someone@example.com"} />
+          <Input type="text" required placeholder={"Enter Your Name"} />
+          <Input type="email" required placeholder={"someone@example.com"} />
           <Input type="password" required placeholder={"Enter Password"} />
           <TermLabel id={""}>
             <span>
@@ -24,13 +25,13 @@ export default function LoginPage() {
               type="submit"
               disabled={false}
             >
-              Login
+              Sign Up
             </Button>
             <Link
               className="h-11 flex items-center justify-center rounded-lg hover:bg-lime-500 hover:text-white"
-              href="signup"
+              href="/login"
             >
-              Go To Sign Up
+              Go To Login
             </Link>
           </section>
         </fieldset>
