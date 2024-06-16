@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  @apply m-0 p-0 box-border decoration-0 list-none text-inherit;
+}
+
+input {
+  @apply border-0 outline-none;
+}
