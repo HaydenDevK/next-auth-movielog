@@ -10,7 +10,17 @@ export default function Footer() {
       <Link className="p-4 font-[500]" href="/movie-list">
         List
       </Link>
-      <Button className="p-4 font-[500]">Login / Sign Up or Logout</Button>
+      {
+        <div>
+          <Link className="p-4 font-[500]" href="/login">
+            Login
+          </Link>
+          /<Button className="p-4 font-[500]">Logout</Button>
+        </div>
+      }
+      <Link className="p-4 font-[500]" href="/signup">
+        (Sign Up)
+      </Link>
     </footer>
   );
 }

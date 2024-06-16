@@ -15,8 +15,8 @@ export default function AddMovieForm() {
         </Button>
       </form>
       <ul className="h-40 border border-dark-4f rounded-lg overflow-y-scroll">
-        {[1, 2, 3].map((movie) => (
-          <li>
+        {[1, 2, 3].map((movie, index) => (
+          <li key={index}>
             <form>
               <Input required type="hidden" value={"movie.title"} />
               <Button
