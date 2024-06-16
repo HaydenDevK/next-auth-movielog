@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function SignupPage() {
   return (
     <main className="w-full py-10 px-6">
-      <Title h1Text="Sign Up" />
+      <Title className="mb-4" h1Text="Sign Up" />
       <form action="">
         <fieldset className="flex flex-col gap-4 mb-4">
           <Input type="text" required placeholder={"Enter Your Name"} />
@@ -28,7 +28,7 @@ export default function SignupPage() {
               Sign Up
             </Button>
             <Link
-              className="h-11 flex items-center justify-center rounded-lg hover:bg-lime-500 hover:text-white"
+              className="h-11 flex items-center justify-center rounded-lg hover:bg-primary hover:text-white"
               href="/login"
             >
               Go To Login

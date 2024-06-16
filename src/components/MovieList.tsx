@@ -4,22 +4,22 @@ import MovieItem from "./MovieItem";
 const sampleList = [
   {
     id: 1,
-    text: "111",
-    watched: true,
+    title: "111",
+    watched: false,
   },
   {
     id: 2,
-    text: "222",
+    title: "222",
     watched: true,
   },
   {
     id: 3,
-    text: "333",
-    watched: true,
+    title: "333",
+    watched: false,
   },
   {
     id: 4,
-    text: "444",
+    title: "444",
     watched: true,
   },
 ];

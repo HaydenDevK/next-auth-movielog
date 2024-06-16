@@ -1,35 +1,28 @@
 import { TMovie } from "@/type/movie";
-import CheckboxImage from "./CheckboxImage";
 import { v4 as uuidv4 } from "uuid";
+import { FaHeartCircleCheck, FaRegHeart } from "react-icons/fa6";
 
 type TMovieCheckbox = {
-  children: React.ReactNode;
   watched: TMovie["watched"];
-  onClickCheckbox: () => void;
 };
 
 const MovieCheckbox = (props: TMovieCheckbox) => {
-  const { children, watched, onClickCheckbox } = props;
+  const { watched } = props;
   const id = uuidv4();
   return (
-    <label
-      className={`flex items-center gap-[8px] grow text-dark-35 text-[14px] font-[400] loading-normal cursor-pointer decoration-s ${
-        watched && "line-through"
-      }`}
-      htmlFor={id}
-    >
-      <div className="flex items-center justify-center w-[23px] h-[23px] border-2 border-dark-4f rounded-[4px] cursor-pointer">
-        {watched && <CheckboxImage />}
-      </div>
-      <input
-        className="hidden"
-        id={id}
-        type="checkbox"
-        checked={watched}
-        onChange={onClickCheckbox}
-      />
-      {children}
-    </label>
+    <form>
+      <label
+        className="flex items-center gap-[12px] grow text-dark-35 text-[14px] font-[400] loading-normal cursor-pointer decoration-s"
+        htmlFor={id}
+      >
+        {watched ? (
+          <FaHeartCircleCheck className="text-[20px] text-primary hover:animate-ping" />
+        ) : (
+          <FaRegHeart className="text-[20px] text-light-ac hover:animate-ping" />
+        )}
+        <input className="hidden" id={id} type="checkbox" checked={watched} />
+      </label>
+    </form>
   );
 };
 

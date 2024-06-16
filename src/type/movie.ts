@@ -17,10 +17,6 @@ export type TTmdbMovie = {
 
 export type TMovie = {
   id: number;
-  text: string;
+  title: string;
   watched: boolean;
 };
-
-// id
-// title;
-// watched;

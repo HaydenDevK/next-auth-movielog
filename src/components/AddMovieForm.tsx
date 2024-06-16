@@ -1,6 +1,7 @@
 import Input from "./Input";
 import Button from "./Button";
 import Title from "./Title";
+import { FaHeartCirclePlus } from "react-icons/fa6";
 
 export default function AddMovieForm() {
   return (
@@ -14,20 +15,21 @@ export default function AddMovieForm() {
           검색
         </Button>
       </form>
-      <ul className="h-40 border border-dark-4f rounded-lg overflow-y-scroll">
+      <ul className="max-h-40 border border-dark-4f rounded-lg overflow-y-scroll">
         {[1, 2, 3].map((movie, index) => (
           <li key={index}>
-            <form>
-              <Input required type="hidden" value={"movie.title"} />
-              <Button
-                className="w-full flex items-center gap-2 mb-4 hover:bg-lime-300"
+            <form className="flex gap-[14px] h-11 pr-[14px] py-lg">
+              <input required type="hidden" value={"movie.title"} />
+              <button
+                className="w-full pl-[14px] rounded-lg text-[14px] font-[500] leading-normal text-left text-light-ac hover:text-primary"
                 type="submit"
               >
-                <p className="grow px-[14px] py-3 rounded-lg text-[14px] font-[500] leading-normal text-light-ac text-left ">
-                  {"movie.title"}
-                </p>
-                <p className="w-[77px] text-dark-4f">추가</p>
-              </Button>
+                {"movie.title"}
+              </button>
+
+              <button>
+                <FaHeartCirclePlus className="text-[20px] text-primary hover:animate-ping" />
+              </button>
             </form>
           </li>
         ))}

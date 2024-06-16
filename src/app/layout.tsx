@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="pb-[64px]">
         {children}
         <Footer />
       </body>
