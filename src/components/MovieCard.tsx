@@ -5,15 +5,23 @@ import { TTmdbMovie } from "@/type/movie";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 
 export default function MovieCard(props: TTmdbMovie) {
+  const { title, poster_path, vote_average, release_date } = props;
   return (
     <div>
-      <img src={thumbnail01.src} alt="" className="rounded-md" />
+      <img
+        src={
+          `https://image.tmdb.org/t/p/w500/${poster_path}` || thumbnail01.src
+        }
+        alt=""
+        className="rounded-md"
+      />
 
       <div className="flex items-start justify-between mt-4">
         <div className="flex flex-col gap-2">
-          <h4 className="line-clamp-1 text-white font-bold text-xl">
-            {"title"}
-          </h4>
+          <h4 className="line-clamp-1 text-white font-bold text-xl">{title}</h4>
+          <p className="text-sm font-bold text-white">
+            {release_date.substr(0, 4)}
+          </p>
           <div className="flex justify-between items-center text-sm text-gray-200">
             <div className="flex items-center gap-2 font-bold">
               <Image
@@ -23,8 +31,7 @@ export default function MovieCard(props: TTmdbMovie) {
                 height={18}
                 className="object-contain"
               />
-              <span className="text-primary">{"rate"}</span>
-              <span className="text-primary font-bold">{"date"}</span>
+              <span className="text-primary">{vote_average.toFixed(1)}</span>
             </div>
           </div>
         </div>
