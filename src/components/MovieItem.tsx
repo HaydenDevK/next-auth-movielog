@@ -1,5 +1,3 @@
-"use client";
-
 import { TMovie } from "@/type/movie";
 import MovieCheckbox from "./MovieCheckbox";
 import Button from "./Button";

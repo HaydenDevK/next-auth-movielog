@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function MovieCard(props: TTmdbMovie) {
   const { id, title, poster_path, vote_average, release_date } = props;
   return (
-    <Link className="w-[240px] flex-shrink-0" href={`/${id}`}>
+    <Link className="w-[240px] flex-shrink-0" href={`/movie-detail/${id}`}>
       <img
         src={
           `https://image.tmdb.org/t/p/w500/${poster_path}` || thumbnail01.src

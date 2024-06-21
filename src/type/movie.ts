@@ -15,6 +15,26 @@ export type TTmdbMovie = {
   vote_count: number;
 };
 
+export type TTmdbSeries = {
+  backdrop_path: string;
+  id: number;
+  original_name: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  adult: false;
+  name: string;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+  origin_country: string[];
+};
+
+export type TTmdbMedia = TTmdbMovie | TTmdbSeries;
+
 export type TMovie = {
   id: number;
   title: string;

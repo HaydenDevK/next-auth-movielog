@@ -1,4 +1,5 @@
-"use cli";
+"use client";
+
 import { TThemeKey, TTmdbMovie } from "@/type/movie";
 import Title from "./Title";
 import MovieCard from "./MovieCard";
@@ -6,6 +7,7 @@ import Link from "next/link";
 import { MdReadMore } from "react-icons/md";
 import { LIST_THEME } from "@/libs/constant";
 import Loader from "./Loader";
+import { useRef } from "react";
 
 type TTmdbMovieListProps = {
   isHome?: boolean;
@@ -16,6 +18,8 @@ type TTmdbMovieListProps = {
 export default async function TmdbMovieList(props: TTmdbMovieListProps) {
   const { isHome, themeKey, movieList } = props;
   const { title, subTitle } = LIST_THEME[themeKey];
+
+  const pageRef = useRef(2);
 
   return (
     <article className="py-16 px-4 border-t-2 bg-black">
@@ -40,7 +44,13 @@ export default async function TmdbMovieList(props: TTmdbMovieListProps) {
         {movieList &&
           movieList.map((movie) => <MovieCard key={movie.id} {...movie} />)}
       </div>
-      {!isHome && <Loader path={`/themed-list/${themeKey}`} />}
+      {!isHome && (
+        <Loader
+          handleInView={() => {
+            // fetchThemedMovies(LIST_THEME[themeKey].themeType, pageRef.current)
+          }}
+        />
+      )}
     </article>
   );
 }
