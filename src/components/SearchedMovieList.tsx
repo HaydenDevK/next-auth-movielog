@@ -5,6 +5,7 @@ import { TTmdbMedia } from "@/type/movie";
 import { useEffect, useRef } from "react";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import Loader from "./Loader";
+import Link from "next/link";
 
 export default function SearchedMovieList({
   searchedMediaList,
@@ -30,12 +31,13 @@ export default function SearchedMovieList({
             <li key={media.id}>
               <form className="flex gap-[14px] h-11 pr-[14px] py-lg">
                 <input required type="hidden" value={"movie.title"} />
-                <button
+                <Link
+                  href={`media-detail/${media.id}`}
                   className="w-full pl-[14px] rounded-lg text-[14px] font-[500] leading-normal text-left text-light-ac hover:text-primary"
                   type="submit"
                 >
                   {"title" in media ? media.title : media.original_name}
-                </button>
+                </Link>
 
                 <button>
                   <FaHeartCirclePlus className="text-[20px] text-primary hover:animate-ping" />
