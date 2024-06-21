@@ -7,7 +7,7 @@ export default function Footer() {
       <Link className="p-5 font-[700] hover:animate-pulse-fast" href="/">
         HOME
       </Link>
-      <Link className="p-5 font-[700]" href="/movie-list">
+      <Link className="p-5 font-[700]" href="/my-list">
         LIST
       </Link>
       {

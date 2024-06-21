@@ -2,7 +2,7 @@ import HomeBanner from "@/components/HomeBanner";
 import HomeHeader from "@/components/HomeHeader";
 import TmdbMovieList from "@/components/TmdbMovieList";
 import { LIST_THEME } from "@/libs/constant";
-import { fetchMovies } from "@/libs/fetch";
+import { fetchThemedMovies } from "@/libs/fetch";
 
 export default async function HomePage() {
   const [
@@ -11,10 +11,10 @@ export default async function HomePage() {
     { results: topRated },
     { results: upcoming },
   ] = await Promise.all([
-    fetchMovies(LIST_THEME.nowPlaying.themeType),
-    fetchMovies(LIST_THEME.popular.themeType),
-    fetchMovies(LIST_THEME.topRated.themeType),
-    fetchMovies(LIST_THEME.upcoming.themeType),
+    fetchThemedMovies(LIST_THEME.nowPlaying.themeType),
+    fetchThemedMovies(LIST_THEME.popular.themeType),
+    fetchThemedMovies(LIST_THEME.topRated.themeType),
+    fetchThemedMovies(LIST_THEME.upcoming.themeType),
   ]);
   return (
     <main>

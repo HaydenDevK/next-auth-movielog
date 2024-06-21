@@ -2,7 +2,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");
   const page = searchParams.get("page");
-  const url = `${process.env.NEXT_PUBLIC_TMDB_URL}${type}?language=en-US&page=${page}`;
+  const url = `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${type}?language=kr-KR&page=${page}`;
   const options = {
     method: "GET",
     headers: {
