@@ -15,7 +15,7 @@ type TTmdbMovieListProps = {
   movieList: TTmdbMovie[];
 };
 
-export default async function TmdbMovieList(props: TTmdbMovieListProps) {
+export default function TmdbMovieList(props: TTmdbMovieListProps) {
   const { isHome, themeKey, movieList } = props;
   const { title, subTitle } = LIST_THEME[themeKey];
 
