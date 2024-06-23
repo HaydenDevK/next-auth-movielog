@@ -1,26 +1,57 @@
 import Link from "next/link";
 import Button from "./Button";
+import { getSession } from "@/libs/getSession";
 
-export default function Footer() {
+import { headers } from "next/headers";
+
+export default async function Footer() {
+  const session = await getSession();
+  const headersList = headers();
+  const headerPathname = headersList.get("x-pathname") || "";
+  const getIsCurrentPage = (pathname: string) => headerPathname === pathname;
+
   return (
-    <footer className="flex items-center justify-between w-full fixed bottom-0 bg-primary text-white">
-      <Link className="p-5 font-[700] hover:animate-pulse-fast" href="/">
+    <footer className="grid grid-cols-auto-fill items-center justify-between w-full fixed bottom-0 bg-primary text-white text-center">
+      <Link
+        className={`p-5 font-[700] hover:animate-pulse-fast ${
+          getIsCurrentPage("/") && "text-dark-4f"
+        }`}
+        href="/"
+      >
         HOME
       </Link>
-      <Link className="p-5 font-[700]" href="/my-list">
+      <Link
+        className={`p-5 font-[700] hover:animate-pulse-fast ${
+          getIsCurrentPage("/my-list") && "text-dark-4f"
+        }`}
+        href="/my-list"
+      >
         LIST
       </Link>
-      {
-        <div>
-          <Link className="p-5 font-[700]" href="/login">
-            LOGIN
-          </Link>
-          /<Button className="p-5 font-[700]">LOGOUT</Button>
-        </div>
-      }
-      <Link className="p-5 font-[700]" href="/signup">
-        (SIGN UP)
-      </Link>
+      {session ? (
+        <Button className="p-5 font-[700] hover:animate-pulse-fast">
+          LOGOUT
+        </Button>
+      ) : (
+        <Link
+          className={`p-5 font-[700] hover:animate-pulse-fast ${
+            getIsCurrentPage("/login") && "text-dark-4f"
+          }`}
+          href="/login"
+        >
+          LOGIN
+        </Link>
+      )}
+      {!session && (
+        <Link
+          className={`p-5 font-[700] hover:animate-pulse-fast ${
+            getIsCurrentPage("/signup") && "text-dark-4f"
+          }`}
+          href="/signup"
+        >
+          SIGN UP
+        </Link>
+      )}
     </footer>
   );
 }
