@@ -57,47 +57,55 @@ export const resetMovieAction = () => {
 
 // 회원가입
 export async function signupAction(formData: FormData) {
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string; // 비밀번호는 유출 대비 해시로 암호화
+  let redirectPath = "";
+  const name = formData.get("name")?.toString()?.trim();
+  const email = formData.get("email")?.toString()?.trim();
+  const password = formData.get("password")?.toString()?.trim();
 
-  if (!name || !email || !password) {
-    throw new Error("필수 입력 값을 모두 입력 해주세요.");
+  try {
+    // 몽고디비 연결
+    connectDB();
+
+    // 입력값 발리데이션
+    if (!name || !email || !password) {
+      throw new Error("필수 입력 값을 모두 입력 해주세요.");
+    }
+
+    // 존재하는 회원인지 조회
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      throw new Error("이미 존재하는 회원입니다.");
+    }
+
+    // 없는 회원이면 DB 넣기
+    const hashedPassword = await hash(String(password), 10);
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    await user.save();
+    redirectPath = "/login";
+    console.log("회원가입 성공");
+  } catch (error) {
+    console.error("회원가입 실패", error);
   }
-
-  connectDB();
-
-  // 존재하는 회원인지 조회
-  const existingUser = await User.findOne({ email });
-  if (!existingUser) {
-    throw new Error("이미 존재하는 회원입니다.");
-  }
-
-  // 없는 회원이면 DB 넣기
-  const hashedPassword = await hash(String(password), 10);
-  const user = new User({
-    name,
-    email,
-    password: hashedPassword,
-  });
-
-  await user.save();
-
-  console.log("회원가입 성공");
-  redirect("/");
+  if (redirectPath !== "") redirect(redirectPath);
 }
 
 // 로그인
 export async function loginAction(formData: FormData) {
   let redirectPath = "";
-  const email = formData.get("email");
-  const password = formData.get("password");
-
-  if (!email || !password) {
-    throw new Error("이메일과 패스워드를 입력해주세요.");
-  }
+  const email = formData.get("email")?.toString()?.trim();
+  const password = formData.get("password")?.toString()?.trim();
 
   try {
+    // 입력값 발리데이션
+    if (!email || !password) {
+      throw new Error("이메일과 패스워드를 입력해주세요.");
+    }
+
     // auth.js 연동
     await signIn("credentials", {
       redirect: false,
