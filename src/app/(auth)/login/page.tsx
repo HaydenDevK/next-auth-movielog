@@ -2,16 +2,27 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import TermLabel from "@/components/TermLabel";
 import Title from "@/components/Title";
+import { loginAction } from "@/libs/actions";
 import Link from "next/link";
 
 export default function LoginPage() {
   return (
     <main className="w-full py-10 px-6">
       <Title className="mb-4" h1Text="Login" />
-      <form action="">
+      <form action={loginAction}>
         <fieldset className="flex flex-col gap-4 mb-4">
-          <Input type="text" required placeholder={"someone@example.com"} />
-          <Input type="password" required placeholder={"Enter Password"} />
+          <Input
+            name="email"
+            type="text"
+            required
+            placeholder={"someone@example.com"}
+          />
+          <Input
+            name="password"
+            type="password"
+            required
+            placeholder={"Enter Password"}
+          />
           <TermLabel id={""}>
             <span>
               I agree with <strong>terms</strong> and

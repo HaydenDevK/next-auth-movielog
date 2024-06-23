@@ -14,10 +14,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       select: false,
     },
-    role: {
+    level: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user",
+      enum: ["Free", "Subscribe"],
+      default: "Free",
     },
     // 소셜 로그인
     authProviderId: {

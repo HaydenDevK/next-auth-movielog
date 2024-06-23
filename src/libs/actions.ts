@@ -6,6 +6,7 @@ import { connectDB } from "./db";
 import { User } from "./schema";
 import { hash } from "bcryptjs";
 import { redirect } from "next/navigation";
+import { signIn } from "@/auth";
 
 export const fetchThemedMovies = async (type: string, page = 1) => {
   if (!type) return;
@@ -61,7 +62,7 @@ export async function signupAction(formData: FormData) {
   const password = formData.get("password") as string; // 비밀번호는 유출 대비 해시로 암호화
 
   if (!name || !email || !password) {
-    console.log("필수 입력 값을 모두 입력 해주세요.");
+    throw new Error("필수 입력 값을 모두 입력 해주세요.");
   }
 
   connectDB();
@@ -69,7 +70,7 @@ export async function signupAction(formData: FormData) {
   // 존재하는 회원인지 조회
   const existingUser = await User.findOne({ email });
   if (!existingUser) {
-    console.log("이미 존재하는 회원입니다.");
+    throw new Error("이미 존재하는 회원입니다.");
   }
 
   // 없는 회원이면 DB 넣기
@@ -81,5 +82,33 @@ export async function signupAction(formData: FormData) {
   });
 
   await user.save();
+
+  console.log("회원가입 성공");
   redirect("/");
+}
+
+// 로그인
+export async function loginAction(formData: FormData) {
+  let redirectPath = "";
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  if (!email || !password) {
+    throw new Error("이메일과 패스워드를 입력해주세요.");
+  }
+
+  try {
+    // auth.js 연동
+    await signIn("credentials", {
+      redirect: false,
+      callbackUrl: "/",
+      email,
+      password,
+    });
+    console.log("로그인 성공");
+    redirectPath = "/";
+  } catch (error) {
+    console.error("로그인 실패", error);
+  }
+  if (redirectPath !== "") redirect(redirectPath);
 }
