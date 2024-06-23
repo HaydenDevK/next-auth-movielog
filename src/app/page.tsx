@@ -3,8 +3,14 @@ import HomeHeader from "@/components/HomeHeader";
 import TmdbMovieList from "@/components/TmdbMovieList";
 import { LIST_THEME } from "@/libs/constant";
 import { fetchThemedMovies } from "@/libs/fetch";
+import { getSession } from "@/libs/getSession";
+import { redirect } from "next/navigation";
 
 export default async function HomePage() {
+  // 홈 페이지는 로그인 상태에서만 접근 가능
+  const session = await getSession();
+  if (!session) redirect("/login");
+
   const [
     { results: nowPlaying },
     { results: popular },
