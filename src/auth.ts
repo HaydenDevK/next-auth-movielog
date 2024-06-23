@@ -3,10 +3,12 @@ import Credentials from "next-auth/providers/credentials";
 import { connectDB } from "./libs/db";
 import { User } from "./libs/schema";
 import { compare } from "bcryptjs";
+import GitHub from "next-auth/providers/github";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
+      name: "Credentials",
       credentials: {
         email: { label: "Email" },
         password: { label: "Password", type: "password" },
@@ -30,32 +32,66 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin("비밀번호가 일치하지 않습니다.");
         }
 
-        // 유효한 사용자에게 유저 정보 리턴
-        // auth.js 에서 기본 제공하는 key 값이 있는데, level id는 없기 때문에 별도로 추가해줘야 한다.
+        // jwt와 session에 유저 정보 리턴
         return {
           name: user.name,
           email: user.email,
+          // auth.js 에서 기본 제공하는 key 값이 있는데, level과 id는 없기 때문에 따로 추가해줘야 한다.
           level: user.level,
-          id: user._id, // 몽고디비에서 부여한 id
+          id: user._id, // 몽고디비에서 생성해준 id
         };
       },
     }),
+    GitHub({
+      clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
+    }),
   ],
+  callbacks: {
+    // 크리덴셜도 깃허브도 성공하면 여기로 가는데, 크리덴셜에 있는 값이 깃허브에는 없다
+    signIn: async ({ user, account }: { user: any; account: any }) => {
+      if (account?.provider === "github") {
+        await connectDB();
+        // 이미 존재하는 유저인지 조회할 때, 깃허브가 제공하는 id는 유니크하지 않으므로 email + github 를 유니크 id로 처리
+
+        const existingUser = await User.findOne({
+          authProviderId: `${user.email}github`,
+        });
+        if (!existingUser) {
+          // 없으면 DB에 추가
+          await new User({
+            name: user.name,
+            email: user.email,
+            authProviderId: `${user.email}github`,
+            level: "Subscribe",
+          }).save();
+        } else {
+          // 있으면 jwt.token에 level, id을 추가해줘야 한다
+          user.level = existingUser.level || "Subscribe";
+          user.id = `${user.email}github`;
+        }
+        return true; // 깃허브 로그인 통과!
+      } else {
+        return true; // 크레덴셜 로그인 통과!
+      }
+    },
+    async jwt({ token, user }: { token: any; user: any }) {
+      console.log("jwt", token, user);
+      if (user?.level && user?.id) {
+        // 내부적으로 몇 번의 callback을 스스로 부르는데 값이 매번 다르다. 그 중 user.level과 user.id가 있을 때를 캐치해서 token에 level을 추가해줘야 한다.
+        token.level = user.level;
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      console.log("session", session, token);
+      if (token?.level && token?.id) {
+        // 내부적으로 몇 번의 callback을 스스로 부르는데 값이 매번 다르다. 그 중 token에 level, id가 있을 때를 캐치해서 session에 level, id를 추가해줘야 한다.
+        session.user.level = token.level;
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
 });
-
-export async function login(formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-
-  if (!email || !password) {
-    console.log("필수 입력 값을 모두 입력 해주세요.");
-    // throw new Error("필수 입력 값을 모두 입력 해주세요.")
-    return;
-  }
-
-  try {
-    // auth.js 연동
-  } catch (e) {
-    console.error(e);
-  }
-}

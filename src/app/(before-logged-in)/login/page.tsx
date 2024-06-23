@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import TermLabel from "@/components/TermLabel";
 import Title from "@/components/Title";
-import { loginAction } from "@/libs/actions";
+import { githubLoginAction, loginAction } from "@/libs/actions";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -45,6 +45,15 @@ export default function LoginPage() {
             </Link>
           </section>
         </fieldset>
+      </form>
+      <form action={githubLoginAction}>
+        <Button
+          className="w-full h-11 border border-dark-4f rounded-lg hover:bg-blue-500 hover:text-white hover:border-0"
+          type="submit"
+          disabled={false}
+        >
+          GitHub Login
+        </Button>
       </form>
     </main>
   );

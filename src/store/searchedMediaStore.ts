@@ -1,4 +1,3 @@
-import SearchedMovieList from "@/components/SearchedMovieList";
 import { TTmdbMedia } from "@/type/movie";
 import { create } from "zustand";
 

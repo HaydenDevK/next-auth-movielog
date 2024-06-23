@@ -6,7 +6,7 @@ import { connectDB } from "./db";
 import { User } from "./schema";
 import { hash } from "bcryptjs";
 import { redirect } from "next/navigation";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 
 export const fetchThemedMovies = async (type: string, page = 1) => {
   if (!type) return;
@@ -119,4 +119,14 @@ export async function loginAction(formData: FormData) {
     console.error("로그인 실패", error);
   }
   if (redirectPath !== "") redirect(redirectPath);
+}
+
+// 로그아웃
+export async function logoutAction() {
+  await signOut(); // auth 폴더에 있는거!
+  redirect("/login");
+}
+
+export async function githubLoginAction() {
+  await signIn("github", { callbackUrl: "/" });
 }
