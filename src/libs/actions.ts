@@ -89,7 +89,7 @@ export async function signupAction(formData: FormData) {
     redirectPath = "/login";
     console.log("회원가입 성공");
   } catch (error) {
-    console.error("회원가입 실패", error);
+    throw new Error(`회원가입 실패 : ${error}`);
   }
   if (redirectPath !== "") redirect(redirectPath);
 }
@@ -116,7 +116,7 @@ export async function loginAction(formData: FormData) {
     console.log("로그인 성공");
     redirectPath = "/";
   } catch (error) {
-    console.error("로그인 실패", error);
+    throw new Error(`로그인 실패 : ${error}`);
   }
   if (redirectPath !== "") redirect(redirectPath);
 }
