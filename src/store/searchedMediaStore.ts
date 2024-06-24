@@ -24,14 +24,14 @@ export const useSearchedMediaListStore = create<TSearchedMediaList>((set) => ({
     set({ searchedMediaList: [] });
   },
   fetchSearchedMediaList: async (query, page) => {
-    const url = `${process.env.NEXT_PUBLIC_LOCAL_HOST_URL}/api/search-movies?query=${query}&page=${page}`;
+    const url = `${process.env.NEXT_PUBLIC_APP_URL}/api/search-movies?query=${query}&page=${page}`;
     const { results: newMediaList } = await (
       await fetch(url, { next: { revalidate: 0 } })
     ).json();
     set({ searchedMediaList: newMediaList });
   },
   fetchMoreSearchedMediaList: async (query, page) => {
-    const url = `${process.env.NEXT_PUBLIC_LOCAL_HOST_URL}/api/search-movies?query=${query}&page=${page}`;
+    const url = `${process.env.NEXT_PUBLIC_APP_URL}/api/search-movies?query=${query}&page=${page}`;
     const { results: newMediaList } = await (
       await fetch(url, { next: { revalidate: 0 } })
     ).json();
