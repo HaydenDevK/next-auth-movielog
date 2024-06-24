@@ -11,7 +11,7 @@ export default function Loader({ handleInView }: { handleInView: () => void }) {
     if (inView) {
       handleInView();
     }
-  }, [inView]);
+  }, [inView, handleInView]);
 
   return (
     <div ref={ref} className="flex justify-center items-center py-4">

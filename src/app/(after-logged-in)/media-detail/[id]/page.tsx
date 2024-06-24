@@ -1,5 +1,5 @@
 export default function MediaDetailPage({ params }: { params: string }) {
-  const { id } = params;
+  // const { id } = params;
   return (
     <>
       <h1>MediaDetailPage Component</h1>

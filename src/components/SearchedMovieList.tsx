@@ -24,7 +24,7 @@ export default function SearchedMovieList({
     return (
       <>
         <h3 className="mb-3 text-md font-[500] leading-normal text-primary">
-          "{searchKeyword.toString()}" 검색 결과
+          {`"${searchKeyword.toString()}"`} 검색 결과
         </h3>
         <ul className="max-h-40 border border-dark-4f rounded-lg overflow-y-scroll">
           {searchedMediaList.map((media: TTmdbMedia) => (
