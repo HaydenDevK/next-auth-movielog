@@ -35,6 +35,17 @@ export type TTmdbSeries = {
 
 export type TTmdbMedia = TTmdbMovie | TTmdbSeries;
 
+export type TTmdbResponse = {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: TTmdbMedia[];
+  total_pages: number;
+  total_results: number;
+};
+
 export type TMovie = {
   id: number;
   title: string;

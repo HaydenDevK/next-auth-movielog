@@ -1,25 +1,23 @@
-"use client";
-
-import { TThemeKey, TTmdbMovie } from "@/type/movie";
+import { TThemeType, TTmdbMedia } from "@/type/movie";
 import Title from "./Title";
 import MovieCard from "./MovieCard";
 import Link from "next/link";
 import { MdReadMore } from "react-icons/md";
-import { LIST_THEME } from "@/libs/constant";
 import Loader from "./Loader";
-import { useRef } from "react";
+import { fetchThemedMediasAction } from "@/libs/actions";
 
 type TTmdbMovieListProps = {
+  theme: TThemeType;
   isHome?: boolean;
-  themeKey: TThemeKey;
-  movieList: TTmdbMovie[];
 };
 
-export default function TmdbMovieList(props: TTmdbMovieListProps) {
-  const { isHome, themeKey, movieList } = props;
-  const { title, subTitle } = LIST_THEME[themeKey];
+export default async function TmdbMediaList(props: TTmdbMovieListProps) {
+  const { isHome, theme } = props;
+  const { themeType, title, subTitle } = theme;
+  const { results: mediaList } = await fetchThemedMediasAction(themeType, 7);
 
-  const pageRef = useRef(2);
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+  // const mediaList: TTmdbMedia[] = [];
 
   return (
     <article className="py-16 px-4 border-t-2 bg-black">
@@ -28,7 +26,7 @@ export default function TmdbMovieList(props: TTmdbMovieListProps) {
         {isHome && (
           <Link
             className="flex items-center gap-2 text-white"
-            href={`/themed-list/${themeKey}`}
+            href={`/themed-list/${themeType}`}
           >
             <MdReadMore className="text-[20px]" /> 더보기
           </Link>
@@ -41,8 +39,8 @@ export default function TmdbMovieList(props: TTmdbMovieListProps) {
             : "grid gap-6 grid-cols-auto-fill"
         }
       >
-        {movieList &&
-          movieList.map((movie) => <MovieCard key={movie.id} {...movie} />)}
+        {mediaList &&
+          mediaList.map((media) => <MovieCard key={media.id} {...media} />)}
       </div>
       {!isHome && (
         <Loader

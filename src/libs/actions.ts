@@ -7,17 +7,22 @@ import { User } from "./schema";
 import { hash } from "bcryptjs";
 import { redirect } from "next/navigation";
 import { signIn, signOut } from "@/auth";
+import { TTmdbResponse } from "@/type/movie";
 
-export const fetchThemedMovies = async (type: string, page = 1) => {
+type fetchThemedMedias = (
+  type: string,
+  page?: number
+) => Promise<TTmdbResponse>;
+
+export const fetchThemedMediasAction: fetchThemedMedias = async (
+  type,
+  page = 1
+) => {
   if (!type) return;
 
-  // await useSearchedMediaListStore
-  //   .getState()
-  //   .fetchSearchedMediaList(query, page);
-
-  revalidatePath("/my-list");
-
-  await (
+  // revalidatePath("/");
+  // 여기서 캐시를 revalidatePath 해줘야 하는가? route cache나 data cache를 날리고 싶은가?
+  return await (
     await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/themed-movies?type=${type}&page=${page}`
     )

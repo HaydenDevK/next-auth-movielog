@@ -8,7 +8,7 @@ export default async function layout({
 }) {
   // (after-subscribe) 하위 페이지는 level이 "Subscribe"인 유저만 접근 가능
   const session: any = await getSession();
-  console.log(session);
+  // console.log(session);
   if (!session) redirect("/login");
   if (session.user.level !== "Subscribe") redirect("/");
 

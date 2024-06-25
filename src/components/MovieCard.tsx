@@ -1,12 +1,16 @@
 import Image from "next/image";
 import { thumbnail01 } from "../../public/assets/assets";
 import { star } from "../../public/assets/assets";
-import { TTmdbMovie } from "@/type/movie";
+import { TTmdbMedia, TTmdbMovie } from "@/type/movie";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import Link from "next/link";
 
-export default function MovieCard(props: TTmdbMovie) {
-  const { id, title, poster_path, vote_average, release_date } = props;
+export default function MovieCard(props: TTmdbMedia) {
+  const { id, poster_path, vote_average } = props;
+  const title = "title" in props ? props.title : props.original_name;
+  const release_date =
+    "release_date" in props ? props.release_date : props.first_air_date;
+
   return (
     <Link className="w-[240px] flex-shrink-0" href={`/movie-detail/${id}`}>
       <img
@@ -14,7 +18,7 @@ export default function MovieCard(props: TTmdbMovie) {
           `https://image.tmdb.org/t/p/w500/${poster_path}` || thumbnail01.src
         }
         alt=""
-        className="rounded-md"
+        className="h-[360px] rounded-md"
       />
 
       <div className="flex items-start justify-between mt-4">
