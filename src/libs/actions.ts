@@ -135,3 +135,7 @@ export async function logoutAction() {
 export async function githubLoginAction() {
   await signIn("github", { callbackUrl: "/" });
 }
+
+export async function kakaoLoginAction() {
+  await signIn("kakao", { callbackUrl: "/" });
+}
