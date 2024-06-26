@@ -44,9 +44,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           name: user.name,
           email: user.email,
-          // auth.js 에서 기본 제공하는 key 값이 있는데, level과 id는 없기 때문에 따로 추가해줘야 한다.
+          // auth.js 에서 기본 제공하는 key 값이 있는데, level은 없기 때문에 따로 추가해줘야 한다.
           level: user.level,
-          id: user._id, // 몽고디비에서 생성해준 id
         };
       },
     }),
